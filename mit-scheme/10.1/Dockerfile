@@ -5,9 +5,12 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
       m4 \
  && rm -rf /var/lib/apt/lists/*
 
-ADD https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/10.1.10/mit-scheme-10.1.10-x86-64.tar.gz mit-scheme-10.1.10-x86-64.tar.gz
-RUN tar -xvf mit-scheme-10.1.10-x86-64.tar.gz
-WORKDIR mit-scheme-10.1.10/src
+WORKDIR /build
+COPY checksum checksum
+ADD https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/10.1.10/mit-scheme-10.1.10-x86-64.tar.gz mit-scheme.tar.gz
+RUN sha256sum mit-scheme.tar.gz && sha256sum -c checksum
+RUN mkdir mit-scheme && tar -C mit-scheme --strip-components 1 -xf mit-scheme.tar.gz
+WORKDIR /build/mit-scheme/src
 RUN ./configure
 RUN make
 RUN make install
