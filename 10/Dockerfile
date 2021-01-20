@@ -7,7 +7,7 @@ RUN apt-get update && apt-get -y --no-install-recommends install \
 
 WORKDIR /build
 COPY checksum checksum
-ADD https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/10.1.10/mit-scheme-10.1.10-x86-64.tar.gz mit-scheme.tar.gz
+ADD https://ftp.gnu.org/gnu/mit-scheme/stable.pkg/10.1.11/mit-scheme-10.1.11-x86-64.tar.gz mit-scheme.tar.gz
 RUN sha256sum mit-scheme.tar.gz && sha256sum -c checksum
 RUN mkdir mit-scheme && tar -C mit-scheme --strip-components 1 -xf mit-scheme.tar.gz
 WORKDIR /build/mit-scheme/src
